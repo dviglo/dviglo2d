@@ -28,17 +28,13 @@ dv_copy_shared_libs_to_bin_dir(${target_name})
 # Копируем папки с ресурсами движка в result, если нужно
 set(dir_names engine_data engine_test_data)
 foreach(dir_name ${dir_names})
-    if(NOT EXISTS ${result_dir}/${dir_name})
-        dv_create_dir_link(${engine_dir}/result/${dir_name} ${result_dir}/${dir_name})
-    endif()
+    dv_create_dir_link(${engine_dir}/result/${dir_name} ${result_dir}/${dir_name})
 endforeach()
 
 # Копируем папки с ресурсами приложения в result, если нужно
 set(dir_names letalka_data)
 foreach(dir_name ${dir_names})
-    if(NOT EXISTS ${result_dir}/${dir_name})
-        dv_create_dir_link(${CMAKE_CURRENT_SOURCE_DIR}/${dir_name} ${result_dir}/${dir_name})
-    endif()
+    dv_create_dir_link(${CMAKE_CURRENT_SOURCE_DIR}/${dir_name} ${result_dir}/${dir_name})
 endforeach()
 
 # Добавляем приложение в список тестируемых

@@ -15,9 +15,7 @@ set(dir_names engine_data engine_test_data)
 
 # Копируем папки с ресурсами в result, если нужно
 foreach(dir_name ${dir_names})
-    if(NOT EXISTS ${CMAKE_BINARY_DIR}/result/${dir_name})
-        dv_create_dir_link(${CMAKE_CURRENT_SOURCE_DIR}/../result/${dir_name} ${CMAKE_BINARY_DIR}/result/${dir_name})
-    endif()
+    dv_create_dir_link(${CMAKE_CURRENT_SOURCE_DIR}/../result/${dir_name} ${CMAKE_BINARY_DIR}/result/${dir_name})
 endforeach()
 
 add_subdirectory(hello)

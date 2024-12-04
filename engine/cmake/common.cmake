@@ -99,6 +99,10 @@ endfunction()
 
 # Создаёт ссылку для папки. Если ссылку создать не удалось, то копирует папку
 function(dv_create_dir_link from to)
+    if(EXISTS ${to})
+        return()
+    endif()
+
     if(NOT CMAKE_HOST_WIN32)
         execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${from} ${to}
                         OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE RESULT)
