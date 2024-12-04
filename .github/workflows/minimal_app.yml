@@ -108,7 +108,7 @@ jobs:
           args+=(-D CMAKE_BUILD_TYPE=${{ matrix.build_type }})
         fi
 
-        args+=(-D DV_CTEST=1)
+        args+=(-D DV_CTEST=1 -D CMAKE_SYSTEM_VERSION=10.0.26100.0)
 
         cmake "${args[@]}"
 
