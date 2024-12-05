@@ -12,14 +12,10 @@
     #error "Don't include <windows.h>"
 #endif
 
-#ifdef _WIN32
+// В файле rpcndr.h определён тип byte, который конфликтует с byte движка
+#define byte BYTE
 
-    // В файле rpcndr.h определён тип byte, который конфликтует с byte движка
-    #define byte BYTE
+#include <windows.h>
 
-    #include <windows.h>
-
-    #undef byte
-    #undef max
-
-#endif // def _WIN32
+#undef byte
+#undef max
