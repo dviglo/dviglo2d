@@ -32,7 +32,7 @@
   * Пятнашки: [games/15_puzzle](games/15_puzzle)
   * Кликер: [games/clicker](games/clicker)
   * Леталка: [games/letalka](games/letalka)
-* Утилиты
-  * Спрайтовый манипулятор: [utils/sprite_manipulator](utils/sprite_manipulator)
+* Приложения
+  * Спрайтовый манипулятор: [apps/sprite_manipulator](apps/sprite_manipulator)
 * Остальное
   * Общая документация: [docs](docs)

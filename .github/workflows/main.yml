@@ -5,10 +5,10 @@ name: Main
 on:
   push:
     paths-ignore:
-    - 'utils/sprite_manipulator/**'
+    - 'apps/sprite_manipulator/**'
   pull_request:
     paths-ignore:
-    - 'utils/sprite_manipulator/**'
+    - 'apps/sprite_manipulator/**'
   workflow_dispatch:
 
 jobs:
