@@ -2,12 +2,15 @@
 // Copyright (c) 2008-2023 the Urho3D project
 // License: MIT
 
-// Вместо windows.h нужно подключать win_wrapped.h.
+// Нужно подключать этот файл вместо <windows.h>.
 // Чтобы узнать, какой файл подключает windows.h без обёртки, можно воспользоваться опцией VS:
 // ПКМ по проекту -> Properties -> Configuration Properties -> C/C++ -> Advanced -> Show Includes
 
 #pragma once
 
+#ifdef _WINDOWS_
+    #error "Don't include <windows.h>"
+#endif
 
 #ifdef _WIN32
 
