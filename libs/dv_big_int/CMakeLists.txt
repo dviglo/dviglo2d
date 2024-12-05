@@ -40,8 +40,8 @@ file(GLOB source_files lib/*)
 # Создаём статическую библиотеку
 add_library(${target_name} STATIC ${source_files})
 
-# Делаем заголовочные файлы доступными библиотеке и приложениям
-target_include_directories(${target_name} PUBLIC lib)
+# Делаем заголовочные файлы доступными приложениям
+target_include_directories(${target_name} INTERFACE lib)
 
 # Выводим больше предупреждений
 if(MSVC)
