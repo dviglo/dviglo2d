@@ -11,6 +11,6 @@ project(all)
 include(${engine_dir}/cmake/common.cmake)
 
 add_subdirectory(engine)
-add_subdirectory(libs)
 add_subdirectory(third_party)
+add_subdirectory(libs)
 add_subdirectory(games)

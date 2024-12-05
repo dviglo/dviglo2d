@@ -17,3 +17,4 @@ remove_submodule engine/third_party/external/sdl/repo
 remove_submodule engine/third_party/external/sdl_mixer/repo
 remove_submodule engine/third_party/external/stb/repo
 remove_submodule third_party/external/entt/repo
+remove_submodule third_party/external/nuklear/repo

@@ -30,4 +30,8 @@ sm_path=third_party/external/entt/repo
 git -C "$this_dir" submodule add --depth 1 https://github.com/dviglo2d/entt $sm_path
 git -C "$this_dir" config -f .gitmodules submodule.$sm_path.shallow true
 
+sm_path=third_party/external/nuklear/repo
+git -C "$this_dir" submodule add --depth 1 https://github.com/dviglo2d/Nuklear $sm_path
+git -C "$this_dir" config -f .gitmodules submodule.$sm_path.shallow true
+
 git -C "$this_dir" submodule update --init --recursive
