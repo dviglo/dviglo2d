@@ -88,6 +88,7 @@ SDL_AppResult Application::main_init()
     audio = new Audio();
 
     start();
+    new_frame();
 
     return SDL_APP_CONTINUE;
 }
@@ -118,9 +119,14 @@ SDL_AppResult Application::main_iterate()
     SDL_GL_SwapWindow(DV_OS_WINDOW->window());
 
     if (should_exit_)
+    {
         return SDL_APP_SUCCESS;
+    }
     else
+    {
+        new_frame();
         return SDL_APP_CONTINUE;
+    }
 }
 
 SDL_AppResult Application::main_event(SDL_Event* event)

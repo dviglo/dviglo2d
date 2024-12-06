@@ -31,14 +31,15 @@ protected:
     Application(const std::vector<StrUtf8>& args);
     virtual ~Application() = default;
 
-    virtual void setup() = 0;
-    virtual void start() = 0;
+    virtual void setup() {}
+    virtual void start() {}
+    virtual void new_frame() {}
 
     /// Обработчик событий вызывается перед update()
     virtual void handle_sdl_event(const SDL_Event& event);
 
-    virtual void update(u64 ns) = 0;
-    virtual void draw() = 0;
+    virtual void update(u64 ns) { (void)ns; }
+    virtual void draw() {}
 
 public:
     const std::vector<StrUtf8>& args() const { return args_; }
