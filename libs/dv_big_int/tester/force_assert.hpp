@@ -4,7 +4,7 @@
 #pragma once
 
 #ifdef assert
-    #error "Don't include force_assert.h after cassert"
+    #error "Don't include <cassert>"
 #endif
 
 // Макрос NDEBUG определён в конфигурациях Release, RelWithDebInfo, MinSizeRel
