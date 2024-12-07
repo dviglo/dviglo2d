@@ -12,6 +12,10 @@ using namespace dviglo;
 using namespace std;
 
 
+#ifdef _MSC_VER // VS
+    #pragma warning(disable:4146)
+#endif
+
 void run()
 {
     // BigInt()
