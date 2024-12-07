@@ -35,7 +35,7 @@ protected:
     virtual void start() {}
     virtual void new_frame() {}
 
-    /// Обработчик событий вызывается перед update()
+    /// Обработчики событий вызываются перед update()
     virtual void handle_sdl_event(const SDL_Event& event);
 
     virtual void update(u64 ns) { (void)ns; }
