@@ -27,3 +27,7 @@
 	path = third_party/external/freetype/repo
 	url = https://github.com/dviglo2d/freetype
 	shallow = true
+[submodule "third_party/external/imgui/repo"]
+	path = third_party/external/imgui/repo
+	url = https://github.com/dviglo2d/imgui
+	shallow = true
