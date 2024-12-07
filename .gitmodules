@@ -23,11 +23,11 @@
 	path = third_party/external/entt/repo
 	url = https://github.com/dviglo2d/entt
 	shallow = true
-[submodule "third_party/external/nuklear/repo"]
-	path = third_party/external/nuklear/repo
-	url = https://github.com/dviglo2d/Nuklear
-	shallow = true
 [submodule "third_party/external/freetype/repo"]
 	path = third_party/external/freetype/repo
 	url = https://github.com/dviglo2d/freetype
+	shallow = true
+[submodule "third_party/external/nuklear/repo"]
+	path = third_party/external/nuklear/repo
+	url = https://github.com/dviglo2d/Nuklear
 	shallow = true
