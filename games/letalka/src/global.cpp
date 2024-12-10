@@ -1,6 +1,7 @@
 #include "global.hpp"
 
 #include <dviglo/fs/fs_base.hpp>
+#include <dviglo/fs/log.hpp>
 #include <dviglo/gl_utils/texture_cache.hpp>
 
 
@@ -14,9 +15,11 @@ Global::Global()
     r_20_font_ = make_unique<SpriteFont>(base_path + "engine_test_data/fonts/ubuntu-r_20_simple.fnt");
 
     instance_ = this;
+    DV_LOG->write_debug("Global constructed");
 }
 
 Global::~Global()
 {
     instance_ = nullptr;
+    DV_LOG->write_debug("Global destructed");
 }

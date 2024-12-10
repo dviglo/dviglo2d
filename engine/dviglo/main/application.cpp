@@ -5,17 +5,10 @@
 #include "application.hpp"
 
 #include "engine_params.hpp"
-#include "os_window.hpp"
-
-#include "../audio/audio.hpp"
-#include "../fs/log.hpp"
-#include "../gl_utils/shader_cache.hpp"
-#include "../gl_utils/texture_cache.hpp"
-#include "../std_utils/scope_guard.hpp"
 
 #include <glad/gl.h>
 
-#include <memory>
+
 
 using namespace std;
 
@@ -67,25 +60,19 @@ void Application::handle_sdl_event(const SDL_Event& event)
     }
 }
 
-static Log* log = nullptr;
-static ShaderCache* shader_cache = nullptr;
-static TextureCache* texture_cache = nullptr;
-static OsWindow* os_window = nullptr;
-static Audio* audio = nullptr;
-
 SDL_AppResult Application::main_init()
 {
     setup();
 
-    log = new Log(engine_params::log_path);
-    shader_cache = new ShaderCache();
-    texture_cache = new TextureCache();
+    log_ = make_unique<Log>(engine_params::log_path);
+    shader_cache_ = make_unique<ShaderCache>();
+    texture_cache_ = make_unique<TextureCache>();
 
     if (!SDL_Init(0))
         return SDL_APP_FAILURE;
 
-    os_window = new OsWindow();
-    audio = new Audio();
+    os_window_ = make_unique<OsWindow>();
+    audio_ = make_unique<Audio>();
 
     start();
     new_frame();
@@ -137,26 +124,6 @@ SDL_AppResult Application::main_event(SDL_Event* event)
         return SDL_APP_SUCCESS;
     else
         return SDL_APP_CONTINUE;
-}
-
-void Application::main_quit(SDL_AppResult result)
-{
-    (void)result;
-
-    delete audio;
-    audio = nullptr;
-
-    delete os_window;
-    os_window = nullptr;
-
-    delete texture_cache;
-    texture_cache = nullptr;
-
-    delete shader_cache;
-    shader_cache = nullptr;
-
-    delete log;
-    log = nullptr;
 }
 
 } // namespace dviglo

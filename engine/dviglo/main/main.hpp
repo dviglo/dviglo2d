@@ -39,7 +39,7 @@ std::vector<StrUtf8> main_args_to_vector(i32 argc, char* argv[]);
     void SDL_AppQuit(void* appstate, SDL_AppResult result)                  \
     {                                                                       \
         (void)appstate;                                                     \
-        app->main_quit(result);                                             \
+        (void)result;                                                       \
         delete app;                                                         \
         app = nullptr;                                                      \
     }
