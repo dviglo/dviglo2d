@@ -139,8 +139,10 @@ SDL_AppResult Application::main_event(SDL_Event* event)
         return SDL_APP_CONTINUE;
 }
 
-void Application::main_quit([[maybe_unused]] SDL_AppResult result)
+void Application::main_quit(SDL_AppResult result)
 {
+    (void)result;
+
     delete audio;
     audio = nullptr;
 
