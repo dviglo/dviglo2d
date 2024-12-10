@@ -8,8 +8,6 @@
 
 #include <glad/gl.h>
 
-
-
 using namespace std;
 
 
