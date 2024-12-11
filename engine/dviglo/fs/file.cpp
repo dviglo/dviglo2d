@@ -38,4 +38,27 @@ StrUtf8 read_all_text(const StrUtf8& path)
     return ret;
 }
 
+vector<byte> read_all_data(const StrUtf8& path)
+{
+    vector<byte> ret;
+
+    FILE* fp = file_open(path, "rb");
+
+    if (!fp)
+    {
+        DV_LOG->write_error(format("read_all_data(): !fp | path = \"{}\"", path));
+        return ret;
+    }
+
+    // Определяем размер файла и выделяем память
+    file_seek(fp, 0, SEEK_END);
+    ret.resize(file_tell(fp));
+    file_rewind(fp);
+
+    file_read(ret.data(), 1, (i32)ret.size(), fp);
+    file_close(fp);
+
+    return ret;
+}
+
 } // namespace dviglo
