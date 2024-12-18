@@ -11,11 +11,11 @@ remove_submodule()
     rm -rf "$this_dir/.git/modules/$1"
 }
 
+remove_submodule engine/third_party/external/freetype/repo
 remove_submodule engine/third_party/external/glm/repo
 remove_submodule engine/third_party/external/pugixml/repo
 remove_submodule engine/third_party/external/sdl/repo
 remove_submodule engine/third_party/external/sdl_mixer/repo
 remove_submodule engine/third_party/external/stb/repo
 remove_submodule third_party/external/entt/repo
-remove_submodule third_party/external/freetype/repo
 remove_submodule third_party/external/imgui/repo

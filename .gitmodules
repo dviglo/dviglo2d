@@ -1,3 +1,7 @@
+[submodule "engine/third_party/external/freetype/repo"]
+	path = engine/third_party/external/freetype/repo
+	url = https://github.com/dviglo2d/freetype
+	shallow = true
 [submodule "engine/third_party/external/glm/repo"]
 	path = engine/third_party/external/glm/repo
 	url = https://github.com/dviglo2d/glm
@@ -22,10 +26,6 @@
 [submodule "third_party/external/entt/repo"]
 	path = third_party/external/entt/repo
 	url = https://github.com/dviglo2d/entt
-	shallow = true
-[submodule "third_party/external/freetype/repo"]
-	path = third_party/external/freetype/repo
-	url = https://github.com/dviglo2d/freetype
 	shallow = true
 [submodule "third_party/external/imgui/repo"]
 	path = third_party/external/imgui/repo

@@ -4,6 +4,10 @@ set -x # Включаем эхо
 
 this_dir=$(dirname "$0")
 
+sm_path=engine/third_party/external/freetype/repo
+git -C "$this_dir" submodule add --depth 1 https://github.com/dviglo2d/freetype $sm_path
+git -C "$this_dir" config -f .gitmodules submodule.$sm_path.shallow true
+
 sm_path=engine/third_party/external/glm/repo
 git -C "$this_dir" submodule add --depth 1 https://github.com/dviglo2d/glm $sm_path
 git -C "$this_dir" config -f .gitmodules submodule.$sm_path.shallow true
@@ -28,10 +32,6 @@ git -C "$this_dir" config -f .gitmodules submodule.$sm_path.shallow true
 
 sm_path=third_party/external/entt/repo
 git -C "$this_dir" submodule add --depth 1 https://github.com/dviglo2d/entt $sm_path
-git -C "$this_dir" config -f .gitmodules submodule.$sm_path.shallow true
-
-sm_path=third_party/external/freetype/repo
-git -C "$this_dir" submodule add --depth 1 https://github.com/dviglo2d/freetype $sm_path
 git -C "$this_dir" config -f .gitmodules submodule.$sm_path.shallow true
 
 sm_path=third_party/external/imgui/repo
