@@ -16,7 +16,7 @@ namespace dviglo
 struct Glyph
 {
     i16 x = 0; ///< Горизонтальная позиция в текстуре
-    i16 y = 0; ///< Вертикальаня позиция в текстуре
+    i16 y = 0; ///< Вертикальная позиция в текстуре
     i16 width = 0; ///< Ширина
     i16 height = 0; ///< Высота
     i16 offset_x = 0; ///< Смещение от origin (левый верхний угол) по горизонтали при рендеринге
@@ -38,6 +38,8 @@ public:
     SpriteFont(const SpriteFont&) = delete;
     SpriteFont& operator=(const SpriteFont&) = delete;
 
+    SpriteFont(const StrUtf8& file_path);
+
     Texture* texture(size_t index)
     {
         return textures_[index];
@@ -50,7 +52,6 @@ public:
 
     i32 line_height() const { return line_height_; }
 
-    SpriteFont(const StrUtf8& file_path);
 };
 
 } // namespace dviglo

@@ -71,7 +71,7 @@ inline const IntRect IntRect::zero(0, 0, 0, 0);
 struct Aabb
 {
     glm::vec2 min;
-    glm::vec2 max;
+    glm::vec2 max; ///< Не включительно
 
     Aabb() = default;
 
@@ -102,19 +102,19 @@ struct Aabb
             max.y = point.y;
     }
 
-    void merge(const Aabb& aabb)
+    void merge(const Aabb& other_aabb)
     {
-        if (aabb.min.x < min.x)
-            min.x = aabb.min.x;
+        if (other_aabb.min.x < min.x)
+            min.x = other_aabb.min.x;
 
-        if (aabb.min.y < min.y)
-            min.y = aabb.min.y;
+        if (other_aabb.min.y < min.y)
+            min.y = other_aabb.min.y;
 
-        if (aabb.max.x > max.x)
-            max.x = aabb.max.x;
+        if (other_aabb.max.x > max.x)
+            max.x = other_aabb.max.x;
 
-        if (aabb.max.y > max.y)
-            max.y = aabb.max.y;
+        if (other_aabb.max.y > max.y)
+            max.y = other_aabb.max.y;
     }
 
     Rect to_rect() const
