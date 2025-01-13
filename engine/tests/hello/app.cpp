@@ -39,8 +39,8 @@ void App::start()
     texture_ = DV_TEXTURE_CACHE->get(base_path + "engine_test_data/textures/tile128.png");
     sprite_batch_ = make_unique<SpriteBatch>();
 
-    font_ = make_unique<SpriteFont>(FontSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 20));
-    //font_ = make_unique<SpriteFont>(FontSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 100, 0xFF0000FF, 20));
+    font_ = make_unique<SpriteFont>(SFSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 20));
+    //font_ = make_unique<SpriteFont>(SFSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 100, 0xFF0000FF, 20));
 
     //font_->save(base_path + "engine_test_data/fonts/ubuntu-r_20_simple.fnt");
     // Ещё надо создать файл ubuntu-r_20_simple_0.png.xml

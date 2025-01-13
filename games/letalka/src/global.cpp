@@ -12,7 +12,7 @@ Global::Global()
 
     StrUtf8 base_path = get_base_path();
     spritesheet_ = DV_TEXTURE_CACHE->get(base_path + "letalka_data/textures/spritesheet.png");
-    r_20_font_ = make_unique<SpriteFont>(FontSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 20));
+    r_20_font_ = make_unique<SpriteFont>(SFSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 20));
 
     instance_ = this;
     DV_LOG->write_debug("Global constructed");

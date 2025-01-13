@@ -22,15 +22,15 @@ struct Glyph
     i32 page = std::numeric_limits<i32>::max(); // Номер текстуры
 };
 
-struct FontSettings
+struct SFSettings
 {
     StrUtf8 src_path;
     i32 height; // В пикселях
     i32 blur_radius; // Радиус размытия
     glm::ivec2 texture_size;
 
-    FontSettings(const StrUtf8& src_path, i32 height = 20, i32 blur_radius = 0,
-                 glm::ivec2 texture_size = glm::ivec2(1024, 1024))
+    SFSettings(const StrUtf8& src_path, i32 height = 20, i32 blur_radius = 0,
+               glm::ivec2 texture_size = glm::ivec2(1024, 1024))
         : src_path(src_path)
         , height(height)
         , blur_radius(blur_radius)
@@ -39,14 +39,14 @@ struct FontSettings
     }
 };
 
-struct FontSettingsSimple : FontSettings
+struct SFSettingsSimple : SFSettings
 {
     u32 color; // 0xAABBGGRR
 
-    FontSettingsSimple(const StrUtf8& src_path, i32 height = 20,
-                       u32 color = 0xFFFFFFFF, i32 blur_radius = 0,
-                       glm::ivec2 texture_size = glm::ivec2(1024, 1024))
-        : FontSettings(src_path, height, blur_radius, texture_size)
+    SFSettingsSimple(const StrUtf8& src_path, i32 height = 20,
+                    u32 color = 0xFFFFFFFF, i32 blur_radius = 0,
+                    glm::ivec2 texture_size = glm::ivec2(1024, 1024))
+        : SFSettings(src_path, height, blur_radius, texture_size)
         , color(color)
     {
     }
@@ -67,8 +67,10 @@ public:
 
     SpriteFont(const StrUtf8& file_path);
 
-    // Генерирует спрайтовый шрифт из ttf
-    SpriteFont(const FontSettingsSimple& settings);
+    // Генерирует спрайтовый шрифт из ttf и т.п.
+    SpriteFont(const SFSettingsSimple& settings);
+
+    i32 num_textures() const { return (i32)textures_.size(); }
 
     Texture* texture(size_t index)
     {

@@ -187,7 +187,7 @@ private:
     vector<byte> data;
 
 public:
-    FreeTypeFace(const FontSettings& font_settings)
+    FreeTypeFace(const SFSettings& font_settings)
     {
         // FT_New_Face() ожидает путь в кодировке ANSI, поэтому испольузем FT_New_Memory_Face()
         data = read_all_data(font_settings.src_path);
@@ -316,7 +316,7 @@ static i32 round_to_pixels(FT_Pos value)
     return (i32)(value >> 6) + (((value & 0x3f) >= 32) ? 1 : 0);
 }
 
-RenderedGlyph render_glyph_simpe(FT_Face face, const FontSettingsSimple& font_settings)
+RenderedGlyph render_glyph_simpe(FT_Face face, const SFSettingsSimple& font_settings)
 {
     RenderedGlyph ret;
 
@@ -373,7 +373,7 @@ RenderedGlyph render_glyph_simpe(FT_Face face, const FontSettingsSimple& font_se
     return ret;
 }
 
-SpriteFont::SpriteFont(const FontSettingsSimple& settings)
+SpriteFont::SpriteFont(const SFSettingsSimple& settings)
 {
     auto begin_time = chrono::high_resolution_clock::now();
 

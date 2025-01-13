@@ -236,6 +236,7 @@ Image Image::to_rgba(u32 color)
     return ret;
 }
 
+// TODO: Сделать многопоточным, SIMD или на видеокарте размывать
 void Image::blur_triangle(i32 radius)
 {
     if (!radius)

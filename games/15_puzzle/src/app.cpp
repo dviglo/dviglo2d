@@ -26,7 +26,7 @@ void App::start()
     StrUtf8 base_path = get_base_path();
     sprite_batch_ = make_unique<SpriteBatch>();
     spritesheet_ = DV_TEXTURE_CACHE->get(base_path + "15_puzzle_data/textures/spritesheet.png");
-    my_font_ = make_unique<SpriteFont>(FontSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 60));
+    my_font_ = make_unique<SpriteFont>(SFSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 60));
     puzzle_logic_ = make_shared<PuzzleLogic>();
     puzzle_interface_ = make_shared<PuzzleInterface>(puzzle_logic_);
 }

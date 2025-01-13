@@ -32,7 +32,7 @@ void App::start()
 {
     StrUtf8 base_path = get_base_path();
     sprite_batch_ = make_unique<SpriteBatch>();
-    r_20_font_ = make_unique<SpriteFont>(FontSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 20));
+    r_20_font_ = make_unique<SpriteFont>(SFSettingsSimple(base_path + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf", 20));
 }
 
 void App::handle_sdl_event(const SDL_Event& event)

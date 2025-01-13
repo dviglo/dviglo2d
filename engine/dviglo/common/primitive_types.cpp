@@ -15,6 +15,9 @@ static_assert(sizeof(short) == 2);
 static_assert(sizeof(int) == 4);
 static_assert(sizeof(long long) == 8);
 static_assert(sizeof(char32_t) == 4);
+static_assert(is_same_v<int8_t, signed char>);
+static_assert(is_same_v<int16_t, short>);
+static_assert(is_same_v<int32_t, int>);
 
 #ifdef _WIN32 // MSVC или MinGW
 static_assert(sizeof(long) == 4);
