@@ -34,7 +34,7 @@ static StrUtf8 pref_path = get_pref_path("dviglo2d", "font_generator");
 void App::setup()
 {
     engine_params::log_path = pref_path + "app.log";
-    engine_params::window_size = {900, 700};
+    engine_params::window_size = {1100, 600};
     engine_params::msaa_samples = 4; // При значении 8 крэшится на сервере ГитХаба в Линуксе
     engine_params::window_mode = WindowMode::resizable;
     engine_params::window_title = "Bitmap Font Generator";
@@ -143,6 +143,10 @@ void App::show_ui()
 
     static FontSettings font_settings;
 
+    static bool need_generate = true;
+    auto now = chrono::steady_clock::now();
+    static chrono::steady_clock::time_point last_interaction_time = now;
+
     ImGuiStyle& style = GetStyle();
 
     //ShowDemoWindow(nullptr);
@@ -162,7 +166,12 @@ void App::show_ui()
 
             const StrUtf8 explore_button_label = "...";
             PushItemWidth(-calc_button_width(explore_button_label) - style.ItemSpacing.x);
-            InputText("##src_font_path", &font_settings.src_path, ImGuiInputTextFlags_ElideLeft);
+            if (InputText("##src_font_path", &font_settings.src_path, ImGuiInputTextFlags_ElideLeft))
+            {
+                need_generate = true;
+                last_interaction_time = now;
+            }
+
             PopItemWidth();
 
             SameLine();
@@ -176,7 +185,11 @@ void App::show_ui()
             TextUnformatted("Высота");
 
             SameLine();
-            SliderInt("##font_height", &font_settings.height, 4, 120);
+            if (SliderInt("##font_height", &font_settings.height, 4, 120))
+            {
+                need_generate = true;
+                last_interaction_time = now;
+            }
             SetItemTooltip("В пикселях\n\nРеальная высота символов в текстуре может\nувеличиваться за счёт обводки и размытия");
         }
 
@@ -189,7 +202,11 @@ void App::show_ui()
             SameLine();
             const char* items[] = {"Простой", "С обводкой", "Только контур"};
             static_assert(IM_ARRAYSIZE(items) == (i32)FontStyle::last + 1);
-            Combo("##style_idx", (i32*)&font_settings.font_style, items, IM_ARRAYSIZE(items));
+            if (Combo("##style_idx", (i32*)&font_settings.font_style, items, IM_ARRAYSIZE(items)))
+            {
+                need_generate = true;
+                last_interaction_time = now;
+            }
         }
 
         // Простой стиль
@@ -198,7 +215,11 @@ void App::show_ui()
             Bullet();
             TextUnformatted("Цвет");
             SameLine();
-            ColorEdit4("##main_color", (f32*)&font_settings.main_color, ImGuiColorEditFlags_AlphaPreview);
+            if (ColorEdit4("##main_color", (f32*)&font_settings.main_color, ImGuiColorEditFlags_AlphaPreview))
+            {
+                need_generate = true;
+                last_interaction_time = now;
+            }
 
             Bullet();
             TextUnformatted("Радиус размытия");
@@ -208,7 +229,11 @@ void App::show_ui()
                 constexpr i32 max_val = 20;
                 // Переменная используется в других стилях, ограничиваем
                 ref_clamp(font_settings.blur_radius, min_val, max_val);
-                SliderInt("##blur_radius", &font_settings.blur_radius, min_val, max_val);
+                if (SliderInt("##blur_radius", &font_settings.blur_radius, min_val, max_val))
+                {
+                    need_generate = true;
+                    last_interaction_time = now;
+                }
             }
         }
         // С обводкой
@@ -332,43 +357,39 @@ void App::show_ui()
 
         NewLine();
 
-        // Кнопка генерации
-        {
-            // Центрируем кнопку
-            const StrUtf8 generate_button_label = "Генерировать!";
-            f32 width = calc_button_width(generate_button_label);
-            f32 avail = GetContentRegionAvail().x;
-            f32 offset = (avail - width) * 0.5f;
-            SetCursorPosX(GetCursorPosX() + offset);
-
-            if (Button(generate_button_label.c_str()))
-            {
-                SFSettingsSimple sf_settings(font_settings.src_path,
-                                             font_settings.height,
-                                             (u32)ColorConvertFloat4ToU32(font_settings.main_color),
-                                             font_settings.blur_radius,
-                                             font_settings.texture_size);
-
-                // Измеренное тут время чуть больше, чем измеренное внутри конструктора SpriteFont
-                auto begin_time = chrono::high_resolution_clock::now();
-                generated_font_ = make_unique<SpriteFont>(sf_settings);
-                auto end_time = chrono::high_resolution_clock::now();
-                auto duration = end_time - begin_time;
-                generation_time = (i64)chrono::duration_cast<chrono::milliseconds>(duration).count();
-
-                ref_clamp(current_page, 0, generated_font_->num_textures() - 1);
-            }
-        }
-
-        NewLine();
-
         End();
+    }
+
+    // Генерация
+    {
+        float idleTime = std::chrono::duration<float>(now - last_interaction_time).count();
+
+        if (need_generate && idleTime > 0.5f) // секунд
+        {
+            SFSettingsSimple sf_settings(font_settings.src_path,
+                font_settings.height,
+                (u32)ColorConvertFloat4ToU32(font_settings.main_color),
+                font_settings.blur_radius,
+                font_settings.texture_size);
+
+            // Измеренное тут время чуть больше, чем измеренное внутри конструктора SpriteFont
+            auto begin_time = chrono::high_resolution_clock::now();
+            generated_font_ = make_unique<SpriteFont>(sf_settings);
+            auto end_time = chrono::high_resolution_clock::now();
+            auto duration = end_time - begin_time;
+            generation_time = (i64)chrono::duration_cast<chrono::milliseconds>(duration).count();
+
+            ref_clamp(current_page, 0, generated_font_->num_textures() - 1);
+
+            need_generate = false;
+            last_interaction_time = now;
+        }
     }
 
     // Окно вывода текстур
     {
-        SetNextWindowPos(ImVec2(20.f, 20.f), ImGuiCond_FirstUseEver);
-        SetNextWindowSizeConstraints(ImVec2(10.f, 10.f), ImVec2(FLT_MAX, FLT_MAX));
+        SetNextWindowPos(ImVec2(540.f, 20.f), ImGuiCond_FirstUseEver);
+        SetNextWindowSize(ImVec2(540.f, 560.f), ImGuiCond_FirstUseEver);
         Begin("Сгенерированный шрифт");
 
         if (generated_font_ && generated_font_->num_textures() > 0)
