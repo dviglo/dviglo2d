@@ -332,8 +332,8 @@ RenderedGlyph render_glyph_simpe(FT_Face face, const SFSettingsSimple& font_sett
         return ret;
     }
 
-    error = FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, nullptr, true);
-    //error = FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_MONO, nullptr, true);
+    FT_Render_Mode render_mode = font_settings.anti_aliased ? FT_RENDER_MODE_NORMAL : FT_RENDER_MODE_MONO;
+    error = FT_Glyph_To_Bitmap(&glyph, render_mode, nullptr, 1);
 
     if (error)
     {
@@ -392,8 +392,9 @@ SpriteFont::SpriteFont(const SFSettingsSimple& settings)
 
     while (glyph_index != 0)
     {
-        //FT_Load_Glyph(face.get(), glyph_index, FT_LOAD_TARGET_MONO);
-        FT_Load_Glyph(face.get(), glyph_index, FT_LOAD_TARGET_NORMAL);
+
+        FT_Int32 load_flags = settings.anti_aliased ? FT_LOAD_DEFAULT : FT_LOAD_TARGET_MONO;
+        FT_Load_Glyph(face.get(), glyph_index, load_flags);
         RenderedGlyph rendered_glyph = render_glyph_simpe(face.get(), settings);
         rendered_glyph.code_point = char_code;
 

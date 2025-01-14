@@ -26,14 +26,16 @@ struct SFSettings
 {
     StrUtf8 src_path;
     i32 height; // В пикселях
-    i32 blur_radius; // Радиус размытия
+    bool anti_aliased;
     glm::ivec2 texture_size;
 
-    SFSettings(const StrUtf8& src_path, i32 height = 20, i32 blur_radius = 0,
+    SFSettings(const StrUtf8& src_path,
+               i32 height = 20,
+               bool anti_aliased = true,
                glm::ivec2 texture_size = glm::ivec2(1024, 1024))
         : src_path(src_path)
         , height(height)
-        , blur_radius(blur_radius)
+        , anti_aliased(anti_aliased)
         , texture_size(texture_size)
     {
     }
@@ -41,12 +43,17 @@ struct SFSettings
 
 struct SFSettingsSimple : SFSettings
 {
+    i32 blur_radius; // Радиус размытия
     u32 color; // 0xAABBGGRR
 
-    SFSettingsSimple(const StrUtf8& src_path, i32 height = 20,
-                    u32 color = 0xFFFFFFFF, i32 blur_radius = 0,
-                    glm::ivec2 texture_size = glm::ivec2(1024, 1024))
-        : SFSettings(src_path, height, blur_radius, texture_size)
+    SFSettingsSimple(const StrUtf8& src_path,
+                     i32 height = 20,
+                     bool anti_aliased = true,
+                     i32 blur_radius = 0,
+                     u32 color = 0xFFFFFFFF,
+                     glm::ivec2 texture_size = glm::ivec2(1024, 1024))
+        : SFSettings(src_path, height, anti_aliased, texture_size)
+        , blur_radius(blur_radius)
         , color(color)
     {
     }

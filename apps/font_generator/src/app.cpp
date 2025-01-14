@@ -365,10 +365,11 @@ void App::show_ui()
         if (need_generate && idleTime > 0.5f) // секунд
         {
             SFSettingsSimple sf_settings(font_settings.src_path,
-                font_settings.height,
-                (u32)ColorConvertFloat4ToU32(font_settings.main_color),
-                font_settings.blur_radius,
-                font_settings.texture_size);
+                                         font_settings.height,
+                                         true,
+                                         font_settings.blur_radius,
+                                         (u32)ColorConvertFloat4ToU32(font_settings.main_color),
+                                         font_settings.texture_size);
 
             // Измеренное тут время чуть больше, чем измеренное внутри конструктора SpriteFont
             auto begin_time = chrono::high_resolution_clock::now();
