@@ -215,6 +215,7 @@ public:
         if (face_->num_faces != 1)
             DV_LOG->write_warning(format("FreeTypeFace::FreeTypeFace(): face_->num_faces != 1 | {}", face_->num_faces));
 
+        // Реальная высота текста отличается от запрошенной
         error = FT_Set_Pixel_Sizes(face_, 0, font_settings.height);
         if (error)
         {
@@ -332,7 +333,7 @@ RenderedGlyph render_glyph_simpe(FT_Face face, const SFSettingsSimple& font_sett
         return ret;
     }
 
-    FT_Render_Mode render_mode = font_settings.anti_aliased ? FT_RENDER_MODE_NORMAL : FT_RENDER_MODE_MONO;
+    FT_Render_Mode render_mode = font_settings.anti_aliasing ? FT_RENDER_MODE_NORMAL : FT_RENDER_MODE_MONO;
     error = FT_Glyph_To_Bitmap(&glyph, render_mode, nullptr, 1);
 
     if (error)
@@ -392,8 +393,9 @@ SpriteFont::SpriteFont(const SFSettingsSimple& settings)
 
     while (glyph_index != 0)
     {
+        // Алгоритм хинтига
+        FT_Int32 load_flags = settings.anti_aliasing ? FT_LOAD_TARGET_NORMAL : FT_LOAD_TARGET_MONO;
 
-        FT_Int32 load_flags = settings.anti_aliased ? FT_LOAD_DEFAULT : FT_LOAD_TARGET_MONO;
         FT_Load_Glyph(face.get(), glyph_index, load_flags);
         RenderedGlyph rendered_glyph = render_glyph_simpe(face.get(), settings);
         rendered_glyph.code_point = char_code;

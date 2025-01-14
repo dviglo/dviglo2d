@@ -124,6 +124,7 @@ struct FontSettings
 {
     StrUtf8 src_path = get_base_path() + "engine_test_data/fonts/ubuntu/Ubuntu-R.ttf";
     i32 height = 20; // В пикселях
+    bool anti_aliasing = true;
     FontStyle font_style = FontStyle::simple;
     ImVec4 main_color{1.f, 1.f, 1.f, 1.f};   // Основной цвет
     ImVec4 second_color{0.f, 0.f, 0.f, 1.f}; // Дополнительный цвет
@@ -191,6 +192,18 @@ void App::show_ui()
                 last_interaction_time = now;
             }
             SetItemTooltip("В пикселях\n\nРеальная высота символов в текстуре может\nувеличиваться за счёт обводки и размытия");
+        }
+
+        // Антиалиасинг
+        {
+            TextUnformatted("Антиалиасинг");
+
+            SameLine();
+            if (Checkbox("##font_anti_aliasing", &font_settings.anti_aliasing))
+            {
+                need_generate = true;
+                last_interaction_time = now;
+            }
         }
 
         NewLine();
@@ -366,7 +379,7 @@ void App::show_ui()
         {
             SFSettingsSimple sf_settings(font_settings.src_path,
                                          font_settings.height,
-                                         true,
+                                         font_settings.anti_aliasing,
                                          font_settings.blur_radius,
                                          (u32)ColorConvertFloat4ToU32(font_settings.main_color),
                                          font_settings.texture_size);

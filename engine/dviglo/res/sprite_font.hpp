@@ -26,16 +26,16 @@ struct SFSettings
 {
     StrUtf8 src_path;
     i32 height; // В пикселях
-    bool anti_aliased;
+    bool anti_aliasing;
     glm::ivec2 texture_size;
 
     SFSettings(const StrUtf8& src_path,
                i32 height = 20,
-               bool anti_aliased = true,
+               bool anti_aliasing = true,
                glm::ivec2 texture_size = glm::ivec2(1024, 1024))
         : src_path(src_path)
         , height(height)
-        , anti_aliased(anti_aliased)
+        , anti_aliasing(anti_aliasing)
         , texture_size(texture_size)
     {
     }
@@ -48,11 +48,11 @@ struct SFSettingsSimple : SFSettings
 
     SFSettingsSimple(const StrUtf8& src_path,
                      i32 height = 20,
-                     bool anti_aliased = true,
+                     bool anti_aliasing = true,
                      i32 blur_radius = 0,
                      u32 color = 0xFFFFFFFF,
                      glm::ivec2 texture_size = glm::ivec2(1024, 1024))
-        : SFSettings(src_path, height, anti_aliased, texture_size)
+        : SFSettings(src_path, height, anti_aliasing, texture_size)
         , blur_radius(blur_radius)
         , color(color)
     {
