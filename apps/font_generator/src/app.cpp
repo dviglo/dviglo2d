@@ -355,8 +355,6 @@ void App::show_ui()
 
         PopItemWidth(); // Label элементов не используем
 
-        NewLine();
-
         End();
     }
 
