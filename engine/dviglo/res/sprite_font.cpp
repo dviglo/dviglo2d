@@ -269,19 +269,18 @@ struct RenderedGlyph
     IntRect rect = IntRect::zero;
 };
 
-// FT_BitmapGlyph - это указатель
-static Image to_image(const FT_BitmapGlyph bitmap_glyph)
+static Image to_image(const FT_Bitmap& bitmap)
 {
-    Image ret(bitmap_glyph->bitmap.width, bitmap_glyph->bitmap.rows, 1);
+    Image ret(bitmap.width, bitmap.rows, 1);
 
     // Если изображение монохромное
-    if (bitmap_glyph->bitmap.pixel_mode == FT_PIXEL_MODE_MONO)
+    if (bitmap.pixel_mode == FT_PIXEL_MODE_MONO)
     {
         // В монохромном изображении один пиксель занимает 1 бит (не байт).
         // pitch - это число байт, занимаемых одной линией изображения
         for (i32 y = 0; y < ret.size().y; ++y)
         {
-            u8* src = bitmap_glyph->bitmap.buffer + bitmap_glyph->bitmap.pitch * y;
+            u8* src = bitmap.buffer + bitmap.pitch * y;
             u8* dest = ret.data() + y * ret.size().x;
 
             for (i32 x = 0; x < ret.size().x; ++x)
@@ -301,7 +300,7 @@ static Image to_image(const FT_BitmapGlyph bitmap_glyph)
         // В grayscale изображении каждый пиксель занимает один байт,
         // а значит pitch эквивалентен width
         for (i32 i = 0; i < ret.size().x * ret.size().y; ++i)
-            ret.data()[i] = bitmap_glyph->bitmap.buffer[i];
+            ret.data()[i] = bitmap.buffer[i];
     }
 
     return ret;
@@ -344,7 +343,7 @@ RenderedGlyph render_glyph_simpe(FT_Face face, const SFSettingsSimple& font_sett
     }
 
     FT_BitmapGlyph bitmap_glyph = reinterpret_cast<FT_BitmapGlyph>(glyph);
-    ret.grayscale_image = make_unique<Image>(to_image(bitmap_glyph));
+    ret.grayscale_image = make_unique<Image>(to_image(bitmap_glyph->bitmap));
     FT_Done_Glyph(glyph);
 
     ret.offset.x = round_to_pixels(face->glyph->metrics.horiBearingX);
