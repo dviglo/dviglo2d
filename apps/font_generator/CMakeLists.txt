@@ -20,7 +20,7 @@ else()
 endif()
 
 # Подключаем библиотеки
-target_link_libraries(${target_name} PRIVATE dviglo imgui)
+target_link_libraries(${target_name} PRIVATE dviglo dv_imgui_utils)
 
 # Копируем динамические библиотеки в папку с приложением
 dv_copy_shared_libs_to_bin_dir(${target_name})

@@ -1,7 +1,6 @@
 #include "app.hpp"
 
-#include "file_dialog.hpp"
-
+#include <dv_imgui_utils.hpp>
 #include <dviglo/fs/fs_base.hpp>
 #include <dviglo/main/engine_params.hpp>
 #include <dviglo/main/os_window.hpp>
@@ -9,7 +8,6 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl3.h>
 #include <misc/cpp/imgui_stdlib.h>
-
 #include <misc/freetype/imgui_freetype.h>
 
 #include <chrono>
@@ -137,8 +135,6 @@ enum class FileDialogState
     save_file
 };
 
-// TODO: Каждый сгенерированный шрифт создает текстуры в кэше и не удаляет их.
-// Добавить удаление текстур в кэше по группе
 void App::show_ui()
 {
     using namespace ImGui;
